@@ -190,7 +190,7 @@
 <!-- NAVBAR -->
 <nav>
   <div class="nav-inner">
-    <a href="portal-vintec-unrc.html" class="nav-logo">
+    <a href="index.html" class="nav-logo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 435.3 201.1" style="height:44px;width:auto;">
   <defs>
     <style>
@@ -271,7 +271,7 @@
 <!-- BREADCRUMB -->
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
-    <a href="portal-vintec-unrc.html" onclick="if(window.opener||window.history.length<=1){window.close();return false;}">Portal de Vinculación</a>
+    <a href="index" onclick="if(window.opener||window.history.length<=1){window.close();return false;}">Portal de Vinculación</a>
     <span class="breadcrumb-sep">›</span>
     <span id="breadcrumb-seccion">Cargando...</span>
     <span class="breadcrumb-sep">›</span>
@@ -313,7 +313,7 @@
   <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
   <p style="font-size:18px;font-weight:700;color:var(--text-main);margin-bottom:8px;">No se pudo cargar la ficha</p>
   <p style="margin-bottom:24px;">Puede que el ítem no exista o haya un problema de conexión.</p>
-  <a href="portal-vintec-unrc.html" onclick="if(window.opener||window.history.length<=1){window.close();return false;}" style="color:var(--unrc-sky);font-weight:600;">← Volver al portal</a>
+  <a href="index" onclick="if(window.opener||window.history.length<=1){window.close();return false;}" style="color:var(--unrc-sky);font-weight:600;">← Volver al portal</a>
 </div>
 
 <script>
@@ -433,7 +433,7 @@ function renderServicio(d) {
     <div class="sidebar-panel">
       <h4>Información del servicio</h4>
       ${d.categoria ? `<div class="sidebar-row"><span class="lbl">Categoría</span><span class="val">${d.categoria}</span></div>` : ''}
-      <a href="portal-vintec-unrc.html#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Consultar este servicio →</a>
+      <a href="index#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Consultar este servicio →</a>
     </div>`;
 }
 
@@ -466,7 +466,7 @@ function renderCaso(d) {
       ${d.tipo_empresa ? `<div class="sidebar-row"><span class="lbl">Tipo</span><span class="val">${d.tipo_empresa}</span></div>` : ''}
       ${d.facultad     ? `<div class="sidebar-row"><span class="lbl">Facultad / Instituto</span><span class="val">${d.facultad}</span></div>` : ''}
       ${d.año          ? `<div class="sidebar-row"><span class="lbl">Año</span><span class="val">${d.año}</span></div>` : ''}
-      <a href="portal-vintec-unrc.html#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Quiero un proyecto similar →</a>
+      <a href="index#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Quiero un proyecto similar →</a>
     </div>`;
 }
 
@@ -494,7 +494,7 @@ function renderNoticia(d) {
       ${d.tipo  ? `<div class="sidebar-row"><span class="lbl">Tipo</span><span class="val">${d.tipo}</span></div>` : ''}
       ${d.fecha ? `<div class="sidebar-row"><span class="lbl">Fecha</span><span class="val">${d.fecha}</span></div>` : ''}
       ${d.link  ? `<a href="${d.link}" target="_blank" class="sidebar-cta">Ver nota completa →</a>` : ''}
-      <a href="portal-vintec-unrc.html#noticias" class="sidebar-cta secondary">← Más noticias</a>
+      <a href="index#noticias" class="sidebar-cta secondary">← Más noticias</a>
     </div>`;
 }
 
@@ -522,7 +522,7 @@ function renderFormacion(d) {
       ${d.modalidad ? `<div class="sidebar-row"><span class="lbl">Modalidad</span><span class="val">${d.modalidad}</span></div>` : ''}
       ${d.fecha     ? `<div class="sidebar-row"><span class="lbl">Próximo inicio</span><span class="val">${d.fecha}</span></div>` : ''}
       ${d.link      ? `<a href="${d.link}" target="_blank" class="sidebar-cta">Inscribirse →</a>` : ''}
-      <a href="portal-vintec-unrc.html#contacto-form" class="sidebar-cta ${d.link ? 'secondary' : ''}">Consultar disponibilidad →</a>
+      <a href="index#contacto-form" class="sidebar-cta ${d.link ? 'secondary' : ''}">Consultar disponibilidad →</a>
     </div>`;
 }
 
@@ -565,7 +565,7 @@ function renderEquipo(d) {
       <h4>Información del equipo</h4>
       ${d.area    ? `<div class="sidebar-row"><span class="lbl">Área</span><span class="val">${d.area}</span></div>` : ''}
       ${d.subarea ? `<div class="sidebar-row"><span class="lbl">Subárea</span><span class="val">${d.subarea}</span></div>` : ''}
-      <a href="portal-vintec-unrc.html#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Consultar disponibilidad →</a>
+      <a href="index#contacto-form" class="sidebar-cta" onclick="window.close()" target="_self">Consultar disponibilidad →</a>
     </div>`;
 }
 
