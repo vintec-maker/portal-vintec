@@ -39,12 +39,11 @@ formulario-apps-script.js # Código del backend en Google Apps Script
 | Pestaña | Columnas |
 |---|---|
 | `Servicios` | titulo, descripcion, icono, categoria, color_hex, fondo_hex, link_texto, link_url, activo |
-| `Proyectos` | titulo, empresa, tipo_empresa, descripcion, resultado, resultado_icono, sector, facultad, año, activo |
+| `Proyectos` | titulo, empresa, tipo_empresa, descripcion, resultado, resultado_icono, sector, facultad, año, localidad, lat, lng, activo |
 | `Equipamiento` | nombre, descripcion, facultad, sectores, foto_url, especificaciones, disponibilidad, activo |
 | `Institutos` | nombre, area, responsable, lineas, servicios, proyectos, foto_url, sectores, activo |
 | `PropiedadIntelectual` | titulo, tipo, descripcion, estado, año, numero, area, facultad, activo |
 | `Formacion` | titulo, tipo, descripcion, fecha, duracion, dirigido, sector, modalidad, link, activo |
-| `Noticias` | titulo, tipo, fecha, resumen, imagen_url, link, activo |
 | `Consultas` | (se crea automáticamente por el Apps Script) Ticket, Fecha, Hora, Actor, Nombre, Email, Organización, Necesidades, Sectores, Escala, Mensaje, Estado |
 
 - La columna `activo`: `SI` para mostrar, `NO` para ocultar sin borrar la fila
@@ -53,7 +52,7 @@ formulario-apps-script.js # Código del backend en Google Apps Script
 - `color_hex` y `fondo_hex` aceptan con o sin `#` (el código normaliza)
 
 ### Backend formulario
-- **Apps Script URL:** `https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg-btPmtgrKfsvXgWKvScsU5kB-6Jm1boGxjoZ6fsSjPidn1bJReY_pG9apA/exec`
+- **Apps Script URL:** `https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg/exec`
 - Genera tickets tipo `UNRC-YYYYMMDD-XXXX`
 - Registra en pestaña `Consultas` del mismo Sheet
 - Envía email al equipo + email de confirmación al solicitante
@@ -104,7 +103,7 @@ formulario-apps-script.js # Código del backend en Google Apps Script
 8. **Casos de éxito** — cards con filtros por sector
 9. **Propiedad Intelectual** — cards + panel estático de servicios PI
 10. **Formación** — cards con filtros por tipo
-11. **Noticias** — feed vertical + sidebar con filtros y stats
+11. **Mapa de vinculaciones** — Leaflet.js + OpenStreetMap, datos de pestaña Proyectos (marcadores con popup: título, empresa, sector, link a detalle)
 12. **Formulario wizard** — 4 pasos: actor → necesidad → sector/escala → contacto → confirmación con ticket
 13. **Footer** — logo blanco + links de secciones + contacto
 
@@ -112,7 +111,8 @@ formulario-apps-script.js # Código del backend en Google Apps Script
 - ~~Cómo me vinculo~~ (eliminada, su info está en el formulario)
 - ~~Oferta y Demanda~~ (eliminada, redundante)
 - ~~Feed de Instagram~~ (reemplazado por Noticias desde Sheets)
-- ~~Mapa SVG territorial~~ (pendiente: reimplementar con Leaflet.js real)
+- ~~Mapa SVG territorial~~ (reimplementado con Leaflet.js real — ver sección 11)
+- ~~Noticias~~ (movida a página web separada, eliminada del portal principal)
 
 ---
 
@@ -213,8 +213,13 @@ El archivo `index.html` tiene ~3000 líneas con CSS y JS inline. Separar en:
 - `assets/portal.css` — estilos
 - `assets/portal.js` — lógica
 
-### Pendiente: mapa territorial
-Reimplementar con Leaflet.js + OpenStreetMap alimentado por una pestaña `Municipios` del Sheet con columnas: `nombre`, `lat`, `lng`, `vinculaciones`, `descripcion`.
+### Mapa territorial (implementado)
+Sección `#presencia-territorial` en `index.html`, entre `#casos-exito` y `#propiedad-intelectual`.
+- Leaflet 1.9.4 + OpenStreetMap cargados desde CDN en `<head>`
+- Datos de la pestaña `Proyectos` (sin fetch adicional — reutiliza `casosRows` ya cargado)
+- Columnas usadas: `localidad`, `lat`, `lng`; si `lat`/`lng` están vacíos, geocodifica con Nominatim (1 req/s, con caché)
+- Marcador: círculo azul UNRC; popup con título, empresa, sector y link a `detalle.html`
+- Sección oculta por defecto (`display:none`); se muestra solo cuando hay al menos un marcador con coordenadas
 
 ### Pendiente: palabras clave en Sheets
 Agregar columna `keywords` en Servicios, Equipamiento e Institutos para mejorar la búsqueda (actualmente solo busca en título, descripción y sector).
@@ -276,5 +281,5 @@ docs: actualizar CLAUDE.md con nuevas pestañas
 - **Email UVT:** vintec@ac.unrc.edu.ar
 - **Web UNRC:** https://www.unrc.edu.ar
 - **Google Sheet:** https://docs.google.com/spreadsheets/d/1NFC7XoveB4X5pmYFMuzwQU0Lmiqd7iy_2Ugf0JSFu44
-- **Apps Script:** https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg.../exec
+- **Apps Script:** https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg/exec
 - **GitHub Pages:** rama `main` del repo `vintec-maker/portal-vintec`
