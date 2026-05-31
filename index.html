@@ -1993,6 +1993,11 @@
       <p class="section-sub">Conocé los desarrollos tecnológicos de la UNRC disponibles para licenciar, y los servicios de asesoramiento en PI para tu empresa.</p>
     </div>
 
+    <div class="filtro-activo-banner" id="banner-pi">
+      <span id="banner-pi-txt"></span>
+      <button onclick="limpiarFiltro()">Ver todos ✕</button>
+    </div>
+
     <!-- Carga -->
     <div id="pi-loading" style="text-align:center;padding:48px 0;color:var(--text-sub);">
       <div style="width:36px;height:36px;border:3px solid var(--unrc-light);border-top-color:var(--unrc-sky);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;"></div>
@@ -2063,6 +2068,11 @@
       <p class="section-sub">Soluciones concretas generadas por los grupos de I+D de la UNRC, listas para ser transferidas o adaptadas al sector productivo.</p>
     </div>
 
+    <div class="filtro-activo-banner" id="banner-desarrollos">
+      <span id="banner-dev-txt"></span>
+      <button onclick="limpiarFiltro()">Ver todos ✕</button>
+    </div>
+
     <div id="dev-loading" style="text-align:center;padding:48px 0;color:var(--text-sub);">
       <div style="width:36px;height:36px;border:3px solid var(--unrc-light);border-top-color:var(--unrc-sky);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;"></div>
       <p style="font-size:14px;">Cargando desarrollos...</p>
@@ -2095,6 +2105,11 @@
       <div class="section-label">Capacitación continua</div>
       <h2 class="section-title">Formación para el sector productivo</h2>
       <p class="section-sub">Cursos, talleres y posgrados diseñados para actualizar y potenciar las capacidades de tu equipo.</p>
+    </div>
+
+    <div class="filtro-activo-banner" id="banner-formacion">
+      <span id="banner-form-txt"></span>
+      <button onclick="limpiarFiltro()">Ver todos ✕</button>
     </div>
 
     <!-- Filtros por tipo -->
@@ -3001,7 +3016,7 @@
     const allCards = document.querySelectorAll(
       '.servicio-card, .caso-card, .equipo-card, .instituto-card, .pi-card, .dev-card, .form-card'
     );
-    let counts = { serv:0, caso:0, equip:0, inst:0 };
+    let counts = { serv:0, caso:0, equip:0, inst:0, pi:0, dev:0, form:0 };
     allCards.forEach(card => {
       const match = matchFn(card);
       card.classList.toggle('sector-hidden', !match);
@@ -3010,6 +3025,9 @@
         if (card.classList.contains('caso-card'))     counts.caso++;
         if (card.classList.contains('equipo-card'))   counts.equip++;
         if (card.classList.contains('instituto-card'))counts.inst++;
+        if (card.classList.contains('pi-card'))       counts.pi++;
+        if (card.classList.contains('dev-card'))      counts.dev++;
+        if (card.classList.contains('form-card'))     counts.form++;
       }
     });
 
@@ -3029,6 +3047,18 @@
     const bi = document.getElementById('banner-inst-txt');
     if (bi) { bi.innerHTML = `Institutos para <strong>${label}</strong> (${counts.inst})`; }
     document.getElementById('banner-institutos')?.classList.add('visible');
+
+    const bpi = document.getElementById('banner-pi-txt');
+    if (bpi) { bpi.innerHTML = `Propiedad intelectual para <strong>${label}</strong> (${counts.pi})`; }
+    document.getElementById('banner-pi')?.classList.add('visible');
+
+    const bdev = document.getElementById('banner-dev-txt');
+    if (bdev) { bdev.innerHTML = `Desarrollos para <strong>${label}</strong> (${counts.dev})`; }
+    document.getElementById('banner-desarrollos')?.classList.add('visible');
+
+    const bform = document.getElementById('banner-form-txt');
+    if (bform) { bform.innerHTML = `Formación para <strong>${label}</strong> (${counts.form})`; }
+    document.getElementById('banner-formacion')?.classList.add('visible');
 
     // Scroll suave a servicios
     setTimeout(() => {
@@ -3094,6 +3124,9 @@
     document.getElementById('banner-casos')?.classList.remove('visible');
     document.getElementById('banner-equipamiento')?.classList.remove('visible');
     document.getElementById('banner-institutos')?.classList.remove('visible');
+    document.getElementById('banner-pi')?.classList.remove('visible');
+    document.getElementById('banner-desarrollos')?.classList.remove('visible');
+    document.getElementById('banner-formacion')?.classList.remove('visible');
     const resultEl = document.getElementById('busqueda-resultado');
     if (resultEl) resultEl.style.display = 'none';
     const input = document.getElementById('busqueda-input');
