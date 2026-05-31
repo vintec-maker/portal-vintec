@@ -11,6 +11,8 @@
        Source Sans 3 actúa como fallback web-safe de la misma familia humanista -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs=" crossorigin=""></script>
   <style>
     :root {
       /* ── PALETA OFICIAL UNRC – Manual de Identidad §7.1 y §7.2 ── */
@@ -961,106 +963,6 @@
     @media (max-width: 1024px) { .form-grid { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 640px)  { .form-grid { grid-template-columns: 1fr; } }
 
-    /* ── NOTICIAS ── */
-    .noticias-section { background: #fff; }
-    .noticias-layout { display: grid; grid-template-columns: 1fr 340px; gap: 56px; align-items: start; margin-top: 48px; }
-    
-    /* Feed principal */
-    .noticias-feed { display: flex; flex-direction: column; gap: 0; }
-    .noticia-item {
-      display: grid; grid-template-columns: 200px 1fr; gap: 24px;
-      padding: 28px 0; border-bottom: 1px solid var(--border);
-      transition: background 0.2s; border-radius: 0;
-      text-decoration: none; cursor: pointer;
-    }
-    .noticia-item:first-child { padding-top: 0; }
-    .noticia-item:last-child { border-bottom: none; }
-    .noticia-item:hover .noticia-titulo { color: var(--unrc-sky); }
-    .noticia-img-wrap {
-      width: 200px; height: 130px; border-radius: 10px; overflow: hidden;
-      flex-shrink: 0; background: var(--unrc-light);
-    }
-    .noticia-img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.35s;
-    }
-    .noticia-item:hover .noticia-img { transform: scale(1.04); }
-    .noticia-img-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
-      background: linear-gradient(135deg, var(--unrc-light) 0%, #d0e4f5 100%);
-    }
-    .noticia-content { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
-    .noticia-meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .noticia-tipo-badge {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .07em; padding: 3px 10px; border-radius: 100px;
-    }
-    .tipo-convenio     { background: #E1F5EE; color: #0F6E56; }
-    .tipo-proyecto     { background: #EBF3FA; color: #004080; }
-    .tipo-lanzamiento  { background: #EEEDFE; color: #534AB7; }
-    .tipo-evento       { background: #FAEEDA; color: #854F0B; }
-    .tipo-reconocimiento { background: #FEE8E9; color: #A32D2D; }
-    .tipo-convocatoria { background: #E1F5EE; color: #0F6E56; }
-    .tipo-otro         { background: var(--unrc-light); color: var(--text-sub); }
-    .noticia-fecha {
-      font-size: 11px; color: var(--text-sub); font-weight: 500;
-    }
-    .noticia-titulo {
-      font-size: 16px; font-weight: 700; color: var(--text-main);
-      line-height: 1.35; transition: color 0.2s;
-    }
-    .noticia-resumen {
-      font-size: 13px; color: var(--text-sub); line-height: 1.65;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .noticia-leer {
-      font-size: 12px; font-weight: 700; color: var(--unrc-sky);
-      display: inline-flex; align-items: center; gap: 4px;
-      margin-top: 4px; transition: gap 0.2s;
-    }
-    .noticia-item:hover .noticia-leer { gap: 8px; }
-
-    /* Panel lateral */
-    .noticias-sidebar { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 20px; }
-    .sidebar-card {
-      background: var(--unrc-light); border-radius: var(--radius);
-      padding: 24px; border: 1px solid var(--border);
-    }
-    .sidebar-card h4 { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
-    .sidebar-tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-    .sidebar-tag {
-      font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 100px;
-      background: #fff; border: 1px solid var(--border); color: var(--text-sub);
-      cursor: pointer; transition: all 0.2s;
-    }
-    .sidebar-tag:hover, .sidebar-tag.active {
-      background: var(--unrc-blue); color: #fff; border-color: var(--unrc-blue);
-    }
-    .sidebar-stats { display: flex; flex-direction: column; gap: 12px; }
-    .sidebar-stat-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 12px; border-bottom: 1px solid var(--border);
-    }
-    .sidebar-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .sidebar-stat-label { font-size: 13px; color: var(--text-sub); }
-    .sidebar-stat-num { font-size: 20px; font-weight: 800; color: var(--unrc-blue); }
-
-    /* Carga */
-    #noticias-loading { text-align: center; padding: 48px 0; color: var(--text-sub); }
-    
-    @media (max-width: 1024px) {
-      .noticias-layout { grid-template-columns: 1fr; }
-      .noticias-sidebar { position: static; }
-      .noticia-item { grid-template-columns: 160px 1fr; gap: 16px; }
-      .noticia-img-wrap { width: 160px; height: 110px; }
-    }
-    @media (max-width: 640px) {
-      .noticia-item { grid-template-columns: 1fr; }
-      .noticia-img-wrap { width: 100%; height: 180px; }
-    }
     /* ── HOW IT WORKS ── */
     .how { background: var(--unrc-light); }
     .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -1109,34 +1011,6 @@
     .actor-chip-text .ttl { font-size: 14px; font-weight: 600; color: #fff; }
     .actor-chip-text .sub { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 2px; }
     .actor-chip-arrow { margin-left: auto; color: rgba(255,255,255,0.60); font-size: 16px; }
-
-    /* ── NOTICIAS ── */
-    .noticias { background: #fff; }
-    .noticias-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
-    .ver-todas { font-size: 13px; font-weight: 600; color: var(--unrc-sky); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-    .ver-todas:hover { gap: 10px; }
-    .noticias-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; }
-
-    .noticia-card { border-radius: var(--radius); overflow: hidden; text-decoration: none; display: block; transition: all 0.3s; }
-    .noticia-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .noticia-img { width: 100%; aspect-ratio: 16/10; background: var(--unrc-light); object-fit: cover; display: block; }
-    .noticia-img-placeholder {
-      width: 100%; aspect-ratio: 16/10;
-      background: linear-gradient(135deg, #d0e4f7, #b8d4ee);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 40px;
-    }
-    .noticia-card.featured .noticia-img-placeholder { aspect-ratio: 16/9; font-size: 60px; }
-    .noticia-body { padding: 20px; background: #fff; border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); }
-    .noticia-date { font-size: 11px; color: var(--unrc-gray); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
-    .noticia-body h4 { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.5; margin-bottom: 8px; }
-    .noticia-card.featured .noticia-body h4 { font-size: 20px; }
-    .noticia-body p { font-size: 13px; color: var(--text-sub); line-height: 1.65; }
-    .noticia-tag {
-      display: inline-block; background: var(--unrc-light); color: var(--unrc-blue);
-      font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
-    }
 
     /* ── OFERTA/DEMANDA ── */
     .territorio { background: linear-gradient(160deg, var(--unrc-navy) 0%, #002A5C 100%); position: relative; overflow: hidden; }
@@ -1198,8 +1072,6 @@
       .hero-inner { grid-template-columns: 1fr; gap: 48px; }
       .servicios-grid { grid-template-columns: repeat(2,1fr); }
       .how-grid { grid-template-columns: 1fr; }
-      .noticias-grid { grid-template-columns: 1fr 1fr; }
-      .noticias-grid .noticia-card.featured { grid-column: 1/-1; }
       .territorio-cards { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2,1fr); }
       .footer-top { grid-template-columns: 1fr 1fr; }
@@ -1209,7 +1081,6 @@
       .nav-inner { padding: 0 20px; }
       .nav-links { display: none; }
       .servicios-grid { grid-template-columns: 1fr; }
-      .noticias-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .footer-top { grid-template-columns: 1fr; }
     }
@@ -1444,6 +1315,15 @@
     }
     .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
     .page-ellipsis { color: var(--text-sub); font-size: 13px; padding: 0 4px; align-self: flex-end; }
+
+    /* ── MAPA TERRITORIAL ── */
+    #mapa-territorial { z-index: 0; background: var(--unrc-light); }
+    .leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important; }
+    .mapa-popup-titulo { font-size: 14px; font-weight: 700; color: var(--unrc-blue); margin-bottom: 4px; line-height: 1.4; }
+    .mapa-popup-empresa { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; }
+    .mapa-popup-sector { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; padding: 2px 9px; border-radius: 100px; margin-bottom: 8px; }
+    .mapa-popup-link { display: inline-block; font-size: 12px; font-weight: 600; color: var(--unrc-sky); text-decoration: none; }
+    .mapa-popup-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -1549,7 +1429,6 @@
         </div>
       </div>
       <a href="#investigadores">👩‍🔬 Investigadores</a>
-      <a href="#noticias">Noticias</a>
       <a href="https://www.unrc.edu.ar" target="_blank" rel="noopener"
          title="Ir al sitio web de la UNRC"
          style="display:inline-flex;align-items:center;gap:5px;">
@@ -1585,7 +1464,6 @@
   <div class="nav-mobile-sep"></div>
   <div class="nav-mobile-group">
     <a href="#investigadores" onclick="closeNavMobile()"><span class="nd-icon">👩‍🔬</span>Para investigadores</a>
-    <a href="#noticias" onclick="closeNavMobile()"><span class="nd-icon">📰</span>Noticias</a>
     <a href="https://www.unrc.edu.ar" target="_blank" rel="noopener"><span class="nd-icon">🌐</span>Sitio web UNRC</a>
   </div>
   <a href="#contacto-form" class="nav-mobile-cta" onclick="closeNavMobile()">Vincularme →</a>
@@ -2048,60 +1926,6 @@
 </section>
 
 
-<!-- ── NOTICIAS ── -->
-<section class="noticias-section" id="noticias" style="padding: 72px 32px;">
-  <div class="container">
-    <div class="servicios-header">
-      <div class="section-label">Novedades</div>
-      <h2 class="section-title">Últimas noticias</h2>
-      <p class="section-sub">Convenios, proyectos, lanzamientos y convocatorias de vinculación tecnológica de la UNRC.</p>
-    </div>
-
-    <div class="noticias-layout">
-      <!-- Feed principal -->
-      <div>
-        <div id="noticias-loading">
-          <div style="width:36px;height:36px;border:3px solid var(--unrc-light);border-top-color:var(--unrc-sky);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;"></div>
-          <p style="font-size:14px;">Cargando noticias...</p>
-        </div>
-        <div class="noticias-feed" id="noticias-feed" style="display:none;"></div>
-        <div id="noticias-vacio" style="display:none;text-align:center;padding:48px 0;color:var(--text-sub);">
-          <div style="font-size:40px;margin-bottom:12px;">📰</div>
-          <p style="font-size:14px;">No hay noticias publicadas todavía.</p>
-        </div>
-      </div>
-
-      <!-- Panel lateral -->
-      <aside class="noticias-sidebar">
-        <!-- Filtrar por tipo -->
-        <div class="sidebar-card">
-          <h4>Filtrar por tipo</h4>
-          <div class="sidebar-tag-cloud" id="noticias-filtros">
-            <span class="sidebar-tag active" onclick="filtrarNoticias(this,'todos')">Todas</span>
-            <span class="sidebar-tag" onclick="filtrarNoticias(this,'lanzamiento')">Lanzamientos</span>
-            <span class="sidebar-tag" onclick="filtrarNoticias(this,'evento')">Eventos</span>
-            <span class="sidebar-tag" onclick="filtrarNoticias(this,'reconocimiento')">Reconocimientos</span>
-            <span class="sidebar-tag" onclick="filtrarNoticias(this,'convocatoria')">Convocatorias</span>
-          </div>
-        </div>
-        <!-- Stats rápidas -->
-        <div class="sidebar-card" id="noticias-stats-card" style="display:none;">
-          <h4>Este año</h4>
-          <div class="sidebar-stats" id="noticias-stats"></div>
-        </div>
-        <!-- CTA suscripción -->
-        <div class="sidebar-card" style="background:var(--unrc-blue);border-color:var(--unrc-blue);">
-          <h4 style="color:#fff;">¿Querés recibir novedades?</h4>
-          <p style="font-size:13px;color:rgba(255,255,255,0.78);line-height:1.6;margin-bottom:16px;">Escribinos y te mantenemos informado sobre nuevos servicios, convocatorias y eventos.</p>
-          <a href="mailto:vintec@ac.unrc.edu.ar" style="display:block;text-align:center;background:#fff;color:var(--unrc-blue);font-size:13px;font-weight:700;padding:10px 16px;border-radius:8px;text-decoration:none;">
-            Suscribirme →
-          </a>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
 <!-- ── CASOS DE ÉXITO ── -->
 <section class="casos" id="casos-exito">
   <div class="container">
@@ -2145,6 +1969,18 @@
     <div style="text-align:center; margin-top:48px;">
       <a href="#" class="btn-primary" style="display:inline-flex;">Ver todos los casos →</a>
     </div>
+  </div>
+</section>
+
+<!-- ── PRESENCIA TERRITORIAL ── -->
+<section id="presencia-territorial" style="padding:72px 32px; background:#fff; display:none;">
+  <div class="container">
+    <div class="servicios-header">
+      <div class="section-label">Impacto regional</div>
+      <h2 class="section-title">Presencia territorial</h2>
+      <p class="section-sub" id="mapa-subtitulo">Proyectos de vinculación tecnológica en la región.</p>
+    </div>
+    <div id="mapa-territorial" style="height:480px; border-radius:16px; overflow:hidden; border:1px solid var(--border); margin-top:40px;"></div>
   </div>
 </section>
 
@@ -2727,7 +2563,6 @@
         <h5>Investigación</h5>
         <a href="#institutos">Institutos y grupos I+D</a>
         <a href="#casos-exito">Casos de éxito</a>
-        <a href="#noticias">Noticias</a>
         <a href="#sectores">Explorar por sector</a>
         <a href="#investigadores">👩‍🔬 Para investigadores UNRC</a>
       </div>
@@ -3629,7 +3464,6 @@
       }
     });
 
-    // Noticias: ya se manejan con r.link en renderNoticias
     // Formación
     document.querySelectorAll('.form-cta').forEach((link, i) => {
       if (link.getAttribute('href') === '#contacto-form') {
@@ -3655,7 +3489,6 @@
       institutos:   'Institutos',
       pi:           'PropiedadIntelectual',
       formacion:    'Formacion',
-      noticias:     'Noticias',
       desarrollos:  'Desarrollos'
     }
   };
@@ -3821,7 +3654,7 @@
             <div class="caso-empresa-logo">${st.emoji}</div>
             <div class="caso-empresa-info">
               <div class="nombre">${r.empresa}</div>
-              <div class="tipo">${r.tipo_empresa || ''}</div>
+              <div class="tipo">${r.tipo_empresa || ''}${r.localidad ? ' · 📍 ' + r.localidad : ''}</div>
             </div>
           </div>
           <p class="caso-desc">${r.descripcion}</p>
@@ -4186,127 +4019,103 @@
   }
 
 
-  // ── NOTICIAS ──────────────────────────────────────────────────
+  // ── MAPA TERRITORIAL ──────────────────────────────────────────
 
-  const NOTICIA_TIPOS = {
-    'lanzamiento':     { css:'tipo-lanzamiento',    emoji:'🚀', label:'Lanzamiento'     },
-    'evento':          { css:'tipo-evento',          emoji:'📅', label:'Evento'          },
-    'reconocimiento':  { css:'tipo-reconocimiento',  emoji:'🏆', label:'Reconocimiento'  },
-    'convocatoria':    { css:'tipo-convocatoria',    emoji:'📢', label:'Convocatoria'    },
-    'convenio':        { css:'tipo-convenio',        emoji:'🤝', label:'Convenio'        },
-    'proyecto':        { css:'tipo-proyecto',        emoji:'🔬', label:'Proyecto'        },
-    'default':         { css:'tipo-otro',            emoji:'📰', label:'Noticia'         },
-  };
+  const _geocodeCache = {};
 
-  function noticiaStilo(raw) {
-    const k = (raw||'').toLowerCase().trim()
-      .replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u');
-    return NOTICIA_TIPOS[k] || NOTICIA_TIPOS.default;
+  async function geocodificarLocalidad(localidad) {
+    if (_geocodeCache[localidad] !== undefined) return _geocodeCache[localidad];
+    try {
+      const q = encodeURIComponent(localidad + ', Córdoba, Argentina');
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${q}&format=json&limit=1`,
+        { headers: { 'Accept-Language': 'es' } }
+      );
+      const data = await res.json();
+      if (data && data[0]) {
+        const coords = { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+        _geocodeCache[localidad] = coords;
+        return coords;
+      }
+    } catch (_) {}
+    _geocodeCache[localidad] = null;
+    return null;
   }
 
-  function formatFecha(raw) {
-    if (!raw) return '';
-    // Soporta DD/MM/YYYY, YYYY-MM-DD y texto libre
-    const partes = raw.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
-    if (partes) {
-      const meses = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-      const [,d,m,a] = partes;
-      return `${parseInt(d)} ${meses[parseInt(m)]} ${a.length===2?'20'+a:a}`;
-    }
-    return raw;
-  }
+  function renderMapaTerritorial(rows) {
+    const activos = rows.filter(r =>
+      (r.activo || '').toUpperCase() !== 'NO' && r.localidad
+    );
+    if (!activos.length) return;
 
-  function renderNoticias(rows) {
-    const feed    = document.getElementById('noticias-feed');
-    const loading = document.getElementById('noticias-loading');
-    const vacio   = document.getElementById('noticias-vacio');
-    if (!rows || rows.length === 0) {
-      if (loading) loading.style.display = 'none';
-      if (vacio)   vacio.style.display = 'block';
-      return;
-    }
+    const seccion = document.getElementById('presencia-territorial');
+    if (!seccion) return;
 
-    // Ordenar por fecha desc (más reciente primero), luego por orden de fila
-    const activos = rows
-      .filter(r => (r.activo||'').toUpperCase() !== 'NO')
-      .sort((a,b) => {
-        // Intento de ordenar por fecha si es parseable
-        const fa = new Date(a.fecha || 0), fb = new Date(b.fecha || 0);
-        return isNaN(fb) || isNaN(fa) ? 0 : fb - fa;
-      });
+    const L = window.L;
+    const map = L.map('mapa-territorial').setView([-33.1232, -64.3493], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(map);
 
-    if (!activos.length) {
-      if (loading) loading.style.display = 'none';
-      if (vacio)   vacio.style.display = 'block';
-      return;
-    }
-
-    feed.innerHTML = activos.map(r => {
-      const st     = noticiaStilo(r.tipo);
-      const imgUrl = driveUrl(r.imagen_url);
-      const imgHtml = imgUrl
-        ? `<img class="noticia-img" src="${imgUrl}" alt="${r.titulo}" loading="lazy"
-               onerror="this.parentNode.innerHTML='<div class=\'noticia-img-placeholder\'>${st.emoji}</div>'">`
-        : `<div class="noticia-img-placeholder">${st.emoji}</div>`;
-      const tipoKey = (r.tipo||'').toLowerCase().trim()
-        .replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u');
-
-      return `
-      <div class="noticia-item" data-tipo="${tipoKey}"
-           ${r.link ? `onclick="window.open('${r.link}','_blank')"` : ''}>
-        <div class="noticia-img-wrap">${imgHtml}</div>
-        <div class="noticia-content">
-          <div class="noticia-meta-row">
-            <span class="noticia-tipo-badge ${st.css}">${st.emoji} ${st.label}</span>
-            ${r.fecha ? `<span class="noticia-fecha">${formatFecha(r.fecha)}</span>` : ''}
-          </div>
-          <div class="noticia-titulo">${r.titulo}</div>
-          ${r.resumen ? `<div class="noticia-resumen">${r.resumen}</div>` : ''}
-          ${r.link ? `<span class="noticia-leer">Leer más →</span>` : ''}
-        </div>
-      </div>`;
-    }).join('');
-
-    if (loading) loading.style.display = 'none';
-    feed.style.display = '';
-
-    // Stats laterales
-    actualizarStatsNoticias(activos);
-  }
-
-  function actualizarStatsNoticias(activos) {
-    const statsCard = document.getElementById('noticias-stats-card');
-    const statsEl   = document.getElementById('noticias-stats');
-    if (!statsCard || !statsEl) return;
-
-    const anioActual = new Date().getFullYear();
-    const esteAnio = activos.filter(r => (r.fecha||'').includes(anioActual));
-    if (!esteAnio.length) return;
-
-    const conteo = {};
-    esteAnio.forEach(r => {
-      const st = noticiaStilo(r.tipo);
-      conteo[st.label] = (conteo[st.label] || 0) + 1;
+    const iconoUNRC = L.divIcon({
+      className: '',
+      html: '<div style="width:30px;height:30px;background:#004080;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.28);display:flex;align-items:center;justify-content:center;font-size:13px;">🔬</div>',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -18]
     });
 
-    statsEl.innerHTML = Object.entries(conteo)
-      .sort((a,b) => b[1]-a[1])
-      .map(([label, cnt]) => `
-        <div class="sidebar-stat-row">
-          <span class="sidebar-stat-label">${label}</span>
-          <span class="sidebar-stat-num">${cnt}</span>
-        </div>`).join('');
+    const localidadesVistas = new Set();
 
-    statsCard.style.display = '';
-  }
+    function actualizarSubtitulo() {
+      const n = localidadesVistas.size;
+      const el = document.getElementById('mapa-subtitulo');
+      if (el) el.textContent =
+        `${n} localidad${n !== 1 ? 'es' : ''} con proyectos de vinculación tecnológica en la región.`;
+    }
 
-  function filtrarNoticias(btn, tipo) {
-    document.querySelectorAll('#noticias-filtros .sidebar-tag').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.noticia-item').forEach(item => {
-      const match = tipo === 'todos' || item.dataset.tipo === tipo;
-      item.style.display = match ? '' : 'none';
+    function agregarMarcador(r, lat, lng, rowIdx) {
+      // Mostrar la sección la primera vez que hay un marcador real
+      if (seccion.style.display === 'none') {
+        seccion.style.display = '';
+        map.invalidateSize();
+      }
+      localidadesVistas.add(r.localidad);
+      actualizarSubtitulo();
+
+      const sectorKey = normalizarSector((r.sectores || '').split(',')[0].trim());
+      const st = SECTOR_STYLES[sectorKey] || SECTOR_STYLES.default;
+      const detalleUrl = `detalle.html?tipo=caso&sheet=${SHEETS_CONFIG.SPREADSHEET_ID}&row=${rowIdx + 2}`;
+      const popupHtml = `
+        <div style="min-width:200px;max-width:260px;font-family:'Source Sans 3',Arial,sans-serif;">
+          <div class="mapa-popup-titulo">${r.titulo}</div>
+          <div class="mapa-popup-empresa">${r.empresa}${r.localidad ? ' · 📍 ' + r.localidad : ''}</div>
+          ${sectorKey ? `<span class="mapa-popup-sector" style="background:${st.bg};color:${st.color};">${st.emoji} ${st.label}</span>` : ''}
+          <br><a href="${detalleUrl}" target="_blank" class="mapa-popup-link">Ver caso completo →</a>
+        </div>`;
+      L.marker([lat, lng], { icon: iconoUNRC }).addTo(map).bindPopup(popupHtml);
+    }
+
+    // Paso 1: marcadores con coords directas del Sheet
+    activos.forEach((r, i) => {
+      const lat = parseFloat(r.lat), lng = parseFloat(r.lng);
+      if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+        agregarMarcador(r, lat, lng, i);
+      }
     });
+
+    // Paso 2: geocodificar localidades sin coords, respetando el rate limit de Nominatim (1 req/s)
+    const sinCoords = activos
+      .map((r, i) => ({ r, i }))
+      .filter(({ r }) => !(parseFloat(r.lat) && parseFloat(r.lng)));
+
+    sinCoords.reduce((cadena, { r, i }, idx) =>
+      cadena
+        .then(() => new Promise(res => setTimeout(res, idx === 0 ? 0 : 1100)))
+        .then(() => geocodificarLocalidad(r.localidad))
+        .then(coords => { if (coords) agregarMarcador(r, coords.lat, coords.lng, i); })
+    , Promise.resolve());
   }
 
   // ── Carga principal ──
@@ -4325,7 +4134,7 @@
 
     // Encabezados fijos que se esperan en cada hoja
     const hServs  = ['titulo','descripcion','icono','categoria','link_texto','link_url','sectores','area','subarea','tipo_servicio','activo'];
-    const hCasos  = ['titulo','empresa','tipo_empresa','descripcion','resultado','resultado_icono','sectores','facultad','año','area','subarea','tipo_servicio','activo'];
+    const hCasos  = ['titulo','empresa','tipo_empresa','descripcion','resultado','resultado_icono','sectores','facultad','año','localidad','lat','lng','area','subarea','tipo_servicio','activo'];
 
     const hEquip = ['nombre','descripcion','sectores','foto_url','especificaciones','capacidades','area','subarea','tipo_servicio','activo'];
     const hInst  = ['nombre','area','responsable','lineas','servicios','proyectos','foto_url','sectores','tipo_servicios','activo'];
@@ -4333,27 +4142,26 @@
     try {
       const hPI   = ['titulo','tipo','descripcion','estado','año','numero','area','subarea','inventores','imagen_url','sectores','tipo_servicio','activo'];
       const hForm = ['titulo','tipo','descripcion','fecha','duracion','dirigido','sectores','modalidad','link','area','subarea','tipo_servicio','activo'];
-      const hNots = ['titulo','tipo','fecha','resumen','imagen_url','link','activo'];
       const hDev  = ['nombre','descripcion','aplicaciones','trl','sector','area','imagen_url','contacto','tipo_servicio','activo'];
 
-      const [rServs, rCasos, rEquip, rInst, rPI, rForm, rNots, rDev] = await Promise.all([
+      const [rServs, rCasos, rEquip, rInst, rPI, rForm, rDev] = await Promise.all([
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.servicios)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.proyectos)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.equipamiento)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.institutos)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.pi)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.formacion)).then(r => r.json()),
-        fetch(sheetUrl(SHEETS_CONFIG.SHEETS.noticias)).then(r => r.json()),
         fetch(sheetUrl(SHEETS_CONFIG.SHEETS.desarrollos)).then(r => r.json()),
       ]);
 
       renderServicios((rServs.values    || []).map(r => rowToObj(hServs, r)));
-      renderProyectos((rCasos.values    || []).map(r => rowToObj(hCasos, r)));
+      const casosRows = (rCasos.values  || []).map(r => rowToObj(hCasos, r));
+      renderProyectos(casosRows);
+      renderMapaTerritorial(casosRows);
       renderEquipamiento((rEquip.values || []).map(r => rowToObj(hEquip, r)));
       renderInstitutos((rInst.values    || []).map(r => rowToObj(hInst,  r)));
       renderPI((rPI.values              || []).map(r => rowToObj(hPI,    r)));
       renderFormacion((rForm.values     || []).map(r => rowToObj(hForm,  r)));
-      renderNoticias((rNots.values      || []).map(r => rowToObj(hNots,  r)));
       renderDesarrollos((rDev.values    || []).map(r => rowToObj(hDev,   r)));
 
       // Actualizar contadores, estadísticas y links después de que todo cargó
@@ -4373,7 +4181,6 @@
       document.getElementById('pi-loading')?.remove();
       document.getElementById('form-loading')?.remove();
       document.getElementById('dev-loading')?.remove();
-      document.getElementById('noticias-loading')?.style && (document.getElementById('noticias-loading').style.display = 'none');
     }
   }
 
