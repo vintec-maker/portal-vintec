@@ -18,7 +18,8 @@ Portal web público de la **Unidad de Vinculación Tecnológica (UVT)** de la Un
 
 ### Archivos principales
 ```
-portal-vintec-unrc.html   # Portal principal (single-file HTML/CSS/JS)
+index.html                # Portal principal (single-file HTML/CSS/JS)
+portal-vintec-unrc.html   # Copia legacy — el archivo activo es index.html
 detalle.html              # Página genérica de ficha completa
 formulario-apps-script.js # Código del backend en Google Apps Script
 ```
@@ -52,7 +53,7 @@ formulario-apps-script.js # Código del backend en Google Apps Script
 - `color_hex` y `fondo_hex` aceptan con o sin `#` (el código normaliza)
 
 ### Backend formulario
-- **Apps Script URL:** `https://script.google.com/macros/s/AKfycbzFPPiuVAA_-btPmtgrKfsvXgWKvScsU5kB-6Jm1boGxjoZ6fsSjPidn1bJReY_pG9apA/exec`
+- **Apps Script URL:** `https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg-btPmtgrKfsvXgWKvScsU5kB-6Jm1boGxjoZ6fsSjPidn1bJReY_pG9apA/exec`
 - Genera tickets tipo `UNRC-YYYYMMDD-XXXX`
 - Registra en pestaña `Consultas` del mismo Sheet
 - Envía email al equipo + email de confirmación al solicitante
@@ -199,16 +200,16 @@ Requiere nombre y email. Si falta alguno, vuelve al paso 4.
 
 ## Problemas conocidos y pendientes
 
-### Pendiente crítico: API Key
-La API key de Google fue expuesta en el repo y revocada. **Antes de cualquier deploy:**
-1. Crear nueva key en Google Cloud Console
-2. Restringirla al dominio `*.unrc.edu.ar/*`
-3. Reemplazar `'REEMPLAZAR_CON_NUEVA_API_KEY'` en `SHEETS_CONFIG.API_KEY`
-4. **Mejor solución a largo plazo:** implementar proxy via Apps Script para que la key nunca quede expuesta en el cliente
+### Arquitectura de datos: proxy via Apps Script (implementado)
+La API Key de Google fue eliminada del cliente. El portal ahora usa `formulario-apps-script.js` como proxy:
+- El portal llama a `SHEETS_CONFIG.PROXY_URL?sheet=NombreHoja` (doGet)
+- El Apps Script lee el Sheet con credenciales de servidor y devuelve JSON
+- La API Key nunca queda expuesta en el cliente
+- **Para activar:** copiar `formulario-apps-script.js` al Apps Script editor, re-deployar como nueva versión
 
 ### Pendiente: separar JS del HTML
-El archivo `portal-vintec-unrc.html` tiene ~3000 líneas con CSS y JS inline. Separar en:
-- `portal-vintec-unrc.html` — estructura
+El archivo `index.html` tiene ~3000 líneas con CSS y JS inline. Separar en:
+- `index.html` — estructura
 - `assets/portal.css` — estilos
 - `assets/portal.js` — lógica
 
@@ -246,16 +247,17 @@ git push origin fix/nombre-del-fix
 ### Verificaciones antes de cada commit
 ```bash
 # Detectar script de Cloudflare inyectado
-grep -n "cfasync\|cdn-cgi\|cloudflare" portal-vintec-unrc.html
+grep -n "cfasync\|cdn-cgi\|cloudflare" index.html
 
 # Verificar que el JS cierra correctamente
-grep -c "<script" portal-vintec-unrc.html
-grep -c "</script>" portal-vintec-unrc.html
+grep -c "<script" index.html
+grep -c "</script>" index.html
 # Deben ser iguales
 
-# Verificar que no hay API key expuesta
-grep -n "AIzaSy" portal-vintec-unrc.html
-# No debe retornar nada
+# Verificar que no hay API key expuesta (debe retornar solo la línea de CLAUDE.md)
+grep -rn "AIzaSy" .
+# Verificar que el proxy está configurado
+grep -n "PROXY_URL" index.html
 ```
 
 ### Estructura de commits sugerida
@@ -274,5 +276,5 @@ docs: actualizar CLAUDE.md con nuevas pestañas
 - **Email UVT:** vintec@ac.unrc.edu.ar
 - **Web UNRC:** https://www.unrc.edu.ar
 - **Google Sheet:** https://docs.google.com/spreadsheets/d/1NFC7XoveB4X5pmYFMuzwQU0Lmiqd7iy_2Ugf0JSFu44
-- **Apps Script:** https://script.google.com/macros/s/AKfycbzFPPiuVAA_.../exec
+- **Apps Script:** https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg.../exec
 - **GitHub Pages:** rama `main` del repo `vintec-maker/portal-vintec`

@@ -318,9 +318,9 @@
 
 <script>
 // ══════════════════════════════════════════════════════
-// CONFIGURACIÓN — mismas credenciales que el portal
+// CONFIGURACIÓN — proxy Apps Script (sin API Key expuesta)
 // ══════════════════════════════════════════════════════
-const API_KEY = 'AIzaSyAYEYE_cousbwKa1hWpr4WPhfpeLa1ncVk';
+const PROXY_URL = 'https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg/exec';
 
 const SHEET_NAMES = {
   servicio: 'Servicios',
@@ -355,11 +355,11 @@ const row     = parseInt(params.get('row') || '2');
 
 // ── Cargar datos ──
 async function cargarDetalle() {
-  if (!tipo || !sheetId || !SHEET_NAMES[tipo]) {
+  if (!tipo || !SHEET_NAMES[tipo]) {
     mostrarError(); return;
   }
   const sheetName = SHEET_NAMES[tipo];
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}!A${row}:Z${row}?key=${API_KEY}`;
+  const url = `${PROXY_URL}?sheet=${encodeURIComponent(sheetName)}&row=${row}`;
 
   try {
     const res  = await fetch(url);

@@ -3646,7 +3646,7 @@
   // (ver instrucciones en el documento de configuración adjunto)
   //
   const SHEETS_CONFIG = {
-    API_KEY:      'AIzaSyAYEYE_cousbwKa1hWpr4WPhfpeLa1ncVk',
+    PROXY_URL:      'https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg/exec',
     SPREADSHEET_ID: '1NFC7XoveB4X5pmYFMuzwQU0Lmiqd7iy_2Ugf0JSFu44',
     SHEETS: {
       servicios:    'Servicios',
@@ -3722,9 +3722,7 @@
 
   // ── Helpers ──
   function sheetUrl(sheet) {
-    return `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_CONFIG.SPREADSHEET_ID}`
-      + `/values/${encodeURIComponent(sheet)}!A2:Z500`
-      + `?key=${SHEETS_CONFIG.API_KEY}`;
+    return `${SHEETS_CONFIG.PROXY_URL}?sheet=${encodeURIComponent(sheet)}`;
   }
 
   function rowToObj(headers, row) {
@@ -4313,7 +4311,7 @@
 
   // ── Carga principal ──
   async function cargarDesdeSheets() {
-    const apiConfigurada = SHEETS_CONFIG.API_KEY !== 'TU_API_KEY_AQUI'
+    const apiConfigurada = SHEETS_CONFIG.PROXY_URL !== 'TU_PROXY_URL_AQUI'
                         && SHEETS_CONFIG.SPREADSHEET_ID !== 'TU_SPREADSHEET_ID_AQUI';
 
     if (!apiConfigurada) {
