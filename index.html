@@ -3994,6 +3994,15 @@
     return FORM_TIPO_STYLES[k] || FORM_TIPO_STYLES.default;
   }
 
+  function formatearFecha(raw) {
+    if (!raw) return '';
+    const s = raw.trim();
+    if (!s || s.toLowerCase().includes('permanente') || s.toLowerCase().includes('continua')) return s;
+    const d = new Date(s);
+    if (isNaN(d.getTime())) return s;
+    return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
   // ── Renderizado de Formación ──
   function renderFormacion(rows) {
     const grid    = document.getElementById('form-grid');
@@ -4008,7 +4017,7 @@
       const esPermanente = !r.fecha || r.fecha.toLowerCase().includes('permanente') || r.fecha.toLowerCase().includes('continua');
       const fechaHtml = esPermanente
         ? `<span class="form-fecha-badge permanente">Oferta permanente</span>`
-        : `<span class="form-fecha-badge">📅 ${r.fecha}</span>`;
+        : `<span class="form-fecha-badge">📅 ${formatearFecha(r.fecha)}</span>`;
       const formSectores = r.sectores || r.sector || '';
       return `
       <div class="form-card" data-tipo="${(r.tipo||'').toLowerCase()}" data-sectors="${normalizarSectores(formSectores)}" data-area="${normalizarArea(r.area)||''}" data-tipo-servicio="${normalizarTipoServicio(r.tipo_servicio)||''}">
