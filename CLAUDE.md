@@ -314,3 +314,4 @@ docs: actualizar CLAUDE.md con nuevas pestañas
 - Mapa de vinculaciones implementado (`#presencia-territorial` con Leaflet.js)
 - Banners de filtro activo agregados a PI, Desarrollos y Formación
 - Archivo principal renombrado a `index.html`
+- Función `formatearFecha(raw)` agregada en `renderFormacion`: normaliza strings de fecha (ISO, largo JS, DD/MM/YYYY, "Permanente") a DD/MM/YYYY; valores no parseables o textos especiales se devuelven sin modificar
