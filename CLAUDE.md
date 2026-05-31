@@ -198,6 +198,23 @@ Requiere nombre y email. Si falta alguno, vuelve al paso 4.
 
 ---
 
+## Sistemas de filtrado
+
+Hay 6 sistemas de filtro que interactúan entre sí:
+
+| Sistema | Alcance | Respeta filtro global | Respeta búsqueda global |
+|---|---|---|---|
+| Sectores `#sectores` (global) | Todas las secciones | — | No |
+| Buscador (Hero) | Todas las secciones | Sí (acumulativo) | — |
+| Servicios local | Solo servicios | Sí | Sí |
+| Casos local | Solo casos | Sí | Sí |
+| Equipamiento / Institutos local | Solo su sección | Sí | Sí |
+| Formación | Solo formación | Sí (.sector-hidden) | No |
+
+Todas las secciones con filtro global activo muestran un banner `.filtro-activo-banner` con botón "Ver todo ✕" que llama a `limpiarFiltro()`. Secciones con banner: servicios, equipamiento, institutos, casos, PI, desarrollos, formación.
+
+---
+
 ## Problemas conocidos y pendientes
 
 ### Arquitectura de datos: proxy via Apps Script (implementado)
@@ -283,3 +300,17 @@ docs: actualizar CLAUDE.md con nuevas pestañas
 - **Google Sheet:** https://docs.google.com/spreadsheets/d/1NFC7XoveB4X5pmYFMuzwQU0Lmiqd7iy_2Ugf0JSFu44
 - **Apps Script:** https://script.google.com/macros/s/AKfycbxqX332LOnaIortRheD5AqSNz8sdvJtlYc4gXMsw8itAwqwW0iE-SazXQb6e0Qrb4jRhg/exec
 - **GitHub Pages:** rama `main` del repo `vintec-maker/portal-vintec`
+
+---
+
+## Historial de sesiones
+
+### Mayo 2026
+- Proxy via Apps Script implementado y funcionando (`doGet` + `doPost` en `formulario-apps-script.js`)
+- API Key eliminada del cliente — nunca queda expuesta en el browser
+- Leaflet corregido: removido atributo `integrity` que causaba error de hash
+- Sección Noticias eliminada del portal (movida a página web separada)
+- Columnas `localidad`, `lat`, `lng` agregadas a pestaña `Proyectos`
+- Mapa de vinculaciones implementado (`#presencia-territorial` con Leaflet.js)
+- Banners de filtro activo agregados a PI, Desarrollos y Formación
+- Archivo principal renombrado a `index.html`
